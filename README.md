@@ -1,1 +1,1 @@
-# 파이썬 데이터사이언스 프로젝트
+# python data sciense
