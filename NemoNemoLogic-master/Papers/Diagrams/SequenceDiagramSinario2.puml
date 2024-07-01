@@ -1,0 +1,47 @@
+@startuml 
+
+actor Customer as 1 
+participant NemoHome as 2
+participant NemoSolve as 3
+participant NemoSolvingBoard as 4
+participant NemoToggleButton as 5
+participant NemoWelcome as 6
+participant Problem as  7
+
+
+1->2
+activate 2
+2->3: Click solve problem button
+activate 3
+3->7  
+activate 7 
+7->3 : Load Probelm Object
+deactivate 7
+
+
+3->4
+activate 4
+4->5: Make solving_board 
+activate 5
+5->4 :provide ui component
+deactivate 5
+4->3: provide ui component 
+deactivate 4
+
+
+3->4: User interaction
+activate 4
+4->3
+3->4: Click compare button 
+4->6: 
+deactivate 4
+activate 6
+6->3: show welcome window
+deactivate 6
+3 -> 2: Click back_button
+deactivate 3
+
+2 -> 1 : Completed
+deactivate 2
+
+@enduml

@@ -1,0 +1,54 @@
+@startuml 
+
+actor Customer as 1 
+participant NemoHome as 2
+participant NemoDraw as 3
+participant NemoCanvas as 4
+participant problem as 5
+
+
+1 -> 2: Run NemoApp
+activate 2
+
+2 -> 3: Click make problem button
+activate 3
+
+3 -> 4: Click problem size button
+activate 4
+4 -> 3: Update status bar
+deactivate 4
+
+3 -> 4: Interaction with draw board
+activate 4
+4 -> 3: Show made image  
+deactivate 4
+
+3 -> 4: Click convert pixel button
+activate 4
+4 -> 5: Request pixel image
+activate 5
+
+5 -> 4: Convert drawing to pixel_image
+deactivate 5
+4 -> 3: Upate canvas to pixel_image
+deactivate 4
+
+3 -> 4: Click save problem_button
+activate 4
+4 -> 5: Request Problem object
+activate 5
+5 -> 4: Return Problem Object with current pixel image
+deactivate 5
+4 -> 3: Update status bar
+deactivate 4
+
+
+3 -> 2: Activate_back_button
+deactivate 3
+
+2 -> 1 : Completed
+deactivate 2
+
+
+
+@enduml

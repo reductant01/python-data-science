@@ -1,0 +1,99 @@
+@startuml
+class NemoToggleButton{
+    state: int 
+    +toggle_state()
+    +mousePressEvent(event:left click or right click)
+    +change_style_sheet()
+}
+
+class SolvingBoard{
+    problem_size: int 
+    button_distance: int 
+    button_dict: dict<NemoToggleButton>
+    +get_user_answer(): np.array
+}
+
+class NemoWelcome{
+    ok_button: QPushButton
+}
+
+class NemoSolve{
+    app: NemoApp 
+    load_problem_button: QPushButton 
+    is_correct_button: QPushButton 
+    back_button: QPushButton 
+    statusbar: QStatusBar 
+    row_hint_table: QPlainTextEdit 
+    col_hint_tagle: QPlainTextEdit 
+    welcome_window: NemoWelcome 
+
+    +load_problem()
+    +display_state()
+    +update_hint_table()
+    +compare_with_users()
+}
+
+class NemoHome{
+    app: NemoApp 
+    go_make_button: QPushButton 
+    go_solve_button: QPushButton 
+}
+
+class NemoDraw{
+    canvas: NemoCanvas 
+    status_bar: QStatusBar 
+    size_8_button: QPushButton 
+    size_16_button: QPushButton 
+    size_32_button: QPushButton 
+    upload_button: QPushButton 
+    save_button: QPushButton 
+    apply_button: QPushButton 
+    back_button: QPushButton 
+}
+
+class Problem{
+    size:int
+    pixel_size: int  
+    origin_arr: np.array      
+    ans_arr: np.array   
+    preview:np.array
+}
+
+class NemoCanvas{
+    form_status_bar: QStatusBar 
+    canvas: np.array 
+    click_status: boolean 
+    thickness: int 
+    pen_mode: int 
+    pen_color: tuple 
+    problem_size: int 
+    canvas_scene: QGraphicsScene
+
+    +set_brobelm_size(int)
+    +set_cavnas()
+    +save_probelm()
+}
+
+
+class NemoApp{
+    home_widget: NemoHome
+    draw_widget: NemoSolve
+    solve_widget:NemoSolve
+}
+
+NemoToggleButton --o SolvingBoard
+SolvingBoard --o NemoSolve: return user answer
+NemoWelcome --o NemoSolve
+NemoHome --> NemoSolve
+NemoHome --> NemoDraw
+NemoHome --o NemoApp
+NemoDraw --o NemoApp
+NemoSolve --o NemoApp
+
+NemoCanvas -o NemoDraw :update_status_bar
+NemoDraw --> NemoCanvas : call methods with buttons
+
+NemoCanvas --> Problem: save made problem
+Problem --> NemoSolve: load problem
+
+@enduml
